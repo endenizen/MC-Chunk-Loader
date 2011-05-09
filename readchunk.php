@@ -8,6 +8,8 @@ $wd = substr($wf, 0, $pos);
 $CHUNK_DIR = $wd . '/chunks/';
 $REGION_DIR = $wd . '/world/region/';
 
+function floormod($a, $b) { return (($a % $b) + $b) % $b; }
+
 function readChunk($posx, $posz) {
   global $REGION_DIR;
 
@@ -17,7 +19,7 @@ function readChunk($posx, $posz) {
 
   // open region file, seek to header info
   $file = gzopen($REGION_DIR . "r.$regionX.$regionZ.mcr", 'r');
-  $chunkHeaderLoc = 4 * (($posx % 32) + ($posz % 32) * 32);
+  $chunkHeaderLoc = 4 * (floormod($posx, 32) + floormod($posz, 32) * 32);
   gzseek($file, $chunkHeaderLoc);
   $info = unpack('C*', gzread($file, 4));
   $chunkDataLoc = ($info[1]<<16)|($info[2]<<8)|($info[3]);
