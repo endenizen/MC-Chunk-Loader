@@ -45,6 +45,7 @@ function extractChunk(blocks, chunk) {
     for (z = 0; z < ChunkSizeZ; z++) {
       for (y = ymin; y < ChunkSizeY; y++) {
         var blockID = blocks[y + (z * ChunkSizeY + (x * ChunkSizeY * ChunkSizeZ))];
+        if(!blockID) blockID = 0;
         var blockType = blockInfo['_-1'];
         blockID = '_' + blockID.toString();
          
